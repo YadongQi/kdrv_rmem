@@ -1,0 +1,30 @@
+name: KDRV_RMEM CI
+
+on: [push, pull_request]
+
+jobs:
+  build_ubuntu:
+    runs-on: ubuntu-20.04
+    env:
+      LOCAL_INSTALL_DIR: ${{ github.workspace }}/.local
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v3
+      - name: setup
+        run: |
+          sudo apt-get --quiet update --yes
+          sudo apt-get --quiet install --yes make linux-headers-$(uname -r)
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          gcc --version
+      - name: build
+        run: |
+          make
+      - name: artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: kdrv_rmem.${{ github.run_id }}.${{ github.sha }}
+          path: |
+            build
+            driver/*.ko
