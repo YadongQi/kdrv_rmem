@@ -1,0 +1,21 @@
+# C/C++ build outputs
+.build/
+build/
+bins
+gens
+libs
+objs
+*.bin
+*.o
+
+# Driver
+driver/*.cmd
+driver/*.symvers
+driver/*.mod
+driver/*.mod.c
+driver/*.order
+driver/*.ko
+
+# Visual Studio Code artifacts
+.vscode/*
+.history/
